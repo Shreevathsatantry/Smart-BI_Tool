@@ -2,10 +2,7 @@ from pygwalker.api.streamlit import StreamlitRenderer
 import pandas as pd
 import streamlit as st
 
-# st.set_page_config(
-#     page_title="Use Pygwalker In Streamlit",
-#     layout="wide"
-# )
+
 def show_page():
     st.title("Use Pygwalker In Streamlit")
     uploaded_file = st.file_uploader("Choose a file", type=["csv", "xlsx", "xls"])
