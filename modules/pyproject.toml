@@ -1,0 +1,80 @@
+[project]
+name = "vizzu-builder"
+version = "0.1.0"
+description = "Vizzu Builder is a powerful Streamlit app designed to simplify the process of creating stunning data visualizations and interactive data stories."
+authors = [
+    {name = "Vizzu Inc.", email = "hello@vizzuhq.com"},
+]
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "Apache-2.0"}
+
+[project.urls]
+Homepage = "https://vizzu-builder.streamlit.app/"
+Documentation = "https://github.com/vizzu-streamlit/vizzu-builder"
+Source = "https://github.com/vizzu-streamlit/vizzu-builder"
+Tracker = "https://github.com/vizzu-streamlit/vizzu-builder/issues"
+
+[build-system]
+requires = ["pdm-backend"]
+build-backend = "pdm.backend"
+
+[tool.pdm.dev-dependencies]
+app = [
+    "ipyvizzu<=0.18.0",
+    "ipyvizzu-story<=0.11.0",
+    "streamlit-vizzu<=0.2.0",
+    "black",
+    "pandas",
+    "streamlit-extras",
+]
+stubs = [
+    "pandas-stubs",
+]
+codequality = [
+    "black",
+    "pylint",
+    "mypy",
+]
+docs = [
+    "mdformat",
+    "mdformat-beautysh",
+    "mdformat-black",
+    "mdformat-configurable-black",
+    "mdformat-config",
+    "mdformat-web",
+    "mdformat-admon",
+    "mdformat-gfm",
+    "mdformat-tables",
+    "mdformat-footnote",
+    "mdformat-frontmatter",
+    "mdx_truly_sane_lists",
+]
+
+[tool.pylint.messages-control]
+disable = ["fixme"]
+good-names = ["i", "df"]
+
+[tool.mypy]
+disable_error_code = ["type-arg"]
+
+[tool.pdm.scripts]
+lock = "pdm lock -d"
+
+format = {composite = ["format-black app.py src tools", "format-mdformat README.md CONTRIBUTING.md CODE_OF_CONDUCT.md"]}
+format-black = "black --diff --check"
+format-mdformat = "python ./tools/ci/std_check.py mdformat --wrap 80 --end-of-line keep --line-length 70 --check"
+
+lint = {composite = ["lint-pylint src tools"]}
+lint-pylint = "pylint"
+
+type = {composite = ["type-mypy src tools"]}
+type-mypy = "mypy --strict"
+
+ci = {composite = ["format", "lint", "type"]}
+
+fix = {composite = ["fix-format"]}
+
+fix-format = {composite = ["fix-format-black src tools", "fix-format-mdformat README.md CONTRIBUTING.md CODE_OF_CONDUCT.md"]}
+fix-format-black = "black"
+fix-format-mdformat = "python ./tools/ci/std_check.py mdformat --wrap 80 --end-of-line keep --line-length 70"

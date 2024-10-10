@@ -1,11 +1,13 @@
 import streamlit as st
-from modules import Clean, dashboard_self, Pygwalk, Overview1, Chat, app
 
 # Set page config, this should be the first Streamlit command
 st.set_page_config(
     page_title="Multi-Page Streamlit App",
     layout="wide"
 )
+
+# Now import your modules
+from modules import Clean, dashboard_self, Pygwalk, Overview1, Chat, app, vizzu
 
 # Sidebar for navigation
 with st.sidebar:
@@ -19,7 +21,8 @@ with st.sidebar:
             "Data Visualization", 
             "Data Analysis", 
             "Chat with Dataset", 
-            "Knowledge graph"
+            "Knowledge graph",
+            "Vizzu Animation"
         ]
     )
 
@@ -53,3 +56,6 @@ elif page == "Chat with Dataset":
 
 elif page == "Knowledge graph":
     app.show_page()
+
+elif page == "Vizzu Animation":
+    vizzu.show_page()
